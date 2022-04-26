@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Form\MenuType;
+use App\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,6 +77,71 @@ class MenuController extends AbstractController
         }
         return $this->render('menu/updatemenu.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/stats", name="stats")
+     */
+    public function statistiques(MenuRepository $menuRepo){
+        // On va chercher toutes les menus
+        $menus = $menuRepo->findAll();
+
+//Data Category
+        $Starters = $menuRepo->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->Where('a.category= :category')
+            ->setParameter('category',"Starters")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $fastf = $menuRepo->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->Where('a.category= :category')
+            ->setParameter('category',"Fast Foods")
+            ->getQuery()
+            ->getSingleScalarResult();
+        $Vegetarian= $menuRepo->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->Where('a.category= :category')
+            ->setParameter('category',"Vegetarian")
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        //data Prix
+        $prix1= $menuRepo->createQueryBuilder('b')
+            ->select('count(b.id)')
+            ->andWhere('b.price < 50')
+            ->getQuery()
+            ->getSingleScalarResult();
+        $prix2= $menuRepo->createQueryBuilder('b')
+            ->select('count(b.id)')
+            ->andWhere('b.price > 50')
+            ->andWhere('b.price < 100')
+            ->getQuery()
+            ->getSingleScalarResult();
+        $prix3= $menuRepo->createQueryBuilder('b')
+            ->select('count(b.id)')
+            ->andWhere('b.price > 100')
+            ->andWhere('b.price < 150')
+            ->getQuery()
+            ->getSingleScalarResult();
+        $prix4= $menuRepo->createQueryBuilder('b')
+            ->select('count(b.id)')
+            ->andWhere('b.price > 150')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $this->render('Stats/stats.html.twig', [
+            'nStarters' => $Starters,
+            'nVegetarian' => $Vegetarian,
+            'nff' => $fastf,
+            'prix1' => $prix1,
+            'prix2' => $prix2,
+            'prix3' => $prix3,
+            'prix4' => $prix4,
+
         ]);
     }
 

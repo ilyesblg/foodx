@@ -27,4 +27,5 @@ class MenuType extends AbstractType
             'data_class' => Menu::class,
         ]);
     }
+
 }
