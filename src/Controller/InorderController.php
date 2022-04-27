@@ -60,14 +60,14 @@ class InorderController extends AbstractController
 
         $sheet->setTitle('Product List');
 
-        $sheet->getCell('A1')->setValue('id');
-        $sheet->getCell('B1')->setValue('Menu Name');
-        $sheet->getCell('C1')->setValue('Quantity');
+        $sheet->getCell('A1')->setValue('Total');
+        $sheet->getCell('B1')->setValue('Customer id');
+        $sheet->getCell('C1')->setValue('Date');
 
 
 
         // Increase row cursor after header write
-        $sheet->fromArray([$cartService->getTotal(),"Total"],null, 'A2', true);
+        $sheet->fromArray([$cartService->getTotal(),"1",$date],null, 'A2', true);
 
 
         $writer = new Xlsx($spreadsheet);
