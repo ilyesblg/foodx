@@ -144,5 +144,20 @@ class MenuController extends AbstractController
 
         ]);
     }
+    /**
+     * @Route("/TrierdateASC/back", name="trie1",methods={"GET"})
+     */
+
+    public function triPrix(Request $request, MenuRepository $menuRepository): Response
+    {
+
+        $menuRepository = $this->getDoctrine()->getRepository(Menu::class);
+        $menu= $menuRepository->trierilyes();
+
+        return $this->render('menu/index.html.twig', [
+            'm' => $menu,
+        ]);
+    }
+
 
 }

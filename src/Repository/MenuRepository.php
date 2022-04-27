@@ -21,6 +21,8 @@ class MenuRepository extends ServiceEntityRepository
         parent::__construct($registry, Menu::class);
     }
 
+
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException
@@ -73,4 +75,12 @@ class MenuRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function trierilyes()
+    {
+        return $this->createQueryBuilder('menu')
+            ->orderBy('menu.category', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

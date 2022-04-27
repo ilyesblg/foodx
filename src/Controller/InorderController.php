@@ -6,6 +6,8 @@ use App\Entity\Inorder;
 use App\Entity\Order;
 use App\Repository\MenuRepository;
 use App\Service\Cart\CartService;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,8 +48,63 @@ class InorderController extends AbstractController
 
             // actually executes the queries (i.e. the INSERT query)
             $entityManager->flush();
+
+
+
+
+            // $this->addFlash('info4','excel file is in public !');
         }
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setTitle('Product List');
+
+        $sheet->getCell('A1')->setValue('id');
+        $sheet->getCell('B1')->setValue('Menu Name');
+        $sheet->getCell('C1')->setValue('Quantity');
+
+
+
+        // Increase row cursor after header write
+        $sheet->fromArray([$cartService->getTotal(),"Total"],null, 'A2', true);
+
+
+        $writer = new Xlsx($spreadsheet);
+
+        $writer->save('helloworld.xlsx');
+
         return $this->render('thanks/thanks.html.twig', []);
     }
 
+/**
+* @Route("/export",  name="export")
+*/
+    /*   public function export(CartService $cartService)
+       {
+           $spreadsheet = new Spreadsheet();
+
+           $sheet = $spreadsheet->getActiveSheet();
+
+           $sheet->setTitle('Product List');
+
+           $sheet->getCell('A1')->setValue('id');
+           $sheet->getCell('B1')->setValue('Menu Name');
+           $sheet->getCell('C1')->setValue('Quantity');
+
+
+
+           // Increase row cursor after header write
+           $sheet->fromArray($cartService->getFullCart(),null, 'A2', true);
+
+
+           $writer = new Xlsx($spreadsheet);
+
+           $writer->save('helloworld.xlsx');
+
+          // $this->addFlash('info4','excel file is in public !');
+           return $this->redirectToRoute("reservationlist");
+       }
+
+   */
 }
