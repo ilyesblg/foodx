@@ -76,11 +76,36 @@ class MenuRepository extends ServiceEntityRepository
     }
     */
 
+    public function trierilyes1()
+    {
+        return $this->createQueryBuilder('menu')
+            ->orderBy('menu.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     public function trierilyes()
     {
         return $this->createQueryBuilder('menu')
-            ->orderBy('menu.category', 'ASC')
+            ->orderBy('menu.price', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+public function trierilyes2()
+{
+    return $this->createQueryBuilder('menu')
+        ->orderBy('menu.category', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+    public function searchCathegorie($name)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name LIKE :name')
+            ->setParameter('name', '%'.$name.'%')
+            ->getQuery()
+            ->execute();
     }
 }

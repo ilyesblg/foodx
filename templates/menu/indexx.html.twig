@@ -166,55 +166,51 @@
                             DataTable Example
                         </div>
                         <div class="card-body">
-                            {{ form_start(formSearch,{'attr': {'novalidate': 'novalidate'}} ) }}
-                            {{ form_widget(formSearch.name,{'class':'form-control'},)}}
-                            {{ form_widget(formSearch.search, {'attr': {'placeholder': 'REGISTER','class':'btn btn-primary' }})}}
-                            {{ form_end(formSearch) }}
+                            <a class="btn btn-primary" href="{{ path('menulist') }}">More Options</a>
+
                             <div class="table">
                                 <table class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                                <thead>
-                                                <th>id</th>
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                                <th>Category</th>
-                                                <th>Description</th>
-                                                <th>Suppression</th>
-                                                <th>Modification</th>
-                                                </thead>
-                                                <tfoot>
-                                                </tfoot>
-                                                <tbody>
-                                                {% for menu in m %}
-                                                    <tr>
-                                                        <td>{{ menu.id }}</td>
-                                                        <td>{{ menu.name }}</td>
-                                                        <td>{{ menu.price }}</td>
-                                                        <td>{{ menu.category }}</td>
-                                                        <td>{{ menu.description }}</td>
-                                                        <td>
-                                                            <a class="btn btn-danger" href="{{ path('Remove_Menu',{'id':menu.id}) }}">Supprimer</a>
-                                                        </td>
-                                                        <td>
-                                                            <a class="btn btn-success" href="{{ path('Update_Menu',{'id':menu.id}) }}">Modifier</a>
-                                                        </td>
-                                                    </tr>
+                                    <thead>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Suppression</th>
+                                    <th>Modification</th>
+                                    </thead>
+                                    <tfoot>
+                                    </tfoot>
+                                    <tbody>
+                                    {% for menu in m %}
+                                        <tr>
+                                            <td>{{ menu.id }}</td>
+                                            <td>{{ menu.name }}</td>
+                                            <td>{{ menu.price }}</td>
+                                            <td>{{ menu.category }}</td>
+                                            <td>{{ menu.description }}</td>
+                                            <td>
+                                                <a class="btn btn-danger" href="{{ path('Remove_Menu',{'id':menu.id}) }}">Supprimer</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success" href="{{ path('Update_Menu',{'id':menu.id}) }}">Modifier</a>
+                                            </td>
+                                        </tr>
 
-                                                {% endfor %}
+                                    {% endfor %}
 
-                                                </tbody>
-                                            </table>
-                                <div class="navigation">
-                                    {{ knp_pagination_render(m) }}
-                                </div>
-                                        </div>
+                                    </tbody>
+                                </table>
+
+                            </div>
                             <a class="btn btn-success" href="{{path('trie1') }}">Trier par prix</a>
                             <a class="btn btn-success" href="{{path('trie2') }}">Trier par Id</a>
                             <a class="btn btn-success" href="{{path('trie3') }}">Trier par Category</a>
                             <span class="badge badge-sm bg-gradient"> <a href="{{ path('showpdf') }}">PDF</a></span>
 
                         </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
             </main>
         </div>    </div>
 

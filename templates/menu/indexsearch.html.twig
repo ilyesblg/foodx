@@ -1,5 +1,4 @@
 {% extends 'baseadmin.html.twig' %}
-
 {% block body %}
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -172,49 +171,51 @@
                             {{ form_end(formSearch) }}
                             <div class="table">
                                 <table class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
-                                                <thead>
-                                                <th>id</th>
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                                <th>Category</th>
-                                                <th>Description</th>
-                                                <th>Suppression</th>
-                                                <th>Modification</th>
-                                                </thead>
-                                                <tfoot>
-                                                </tfoot>
-                                                <tbody>
-                                                {% for menu in m %}
-                                                    <tr>
-                                                        <td>{{ menu.id }}</td>
-                                                        <td>{{ menu.name }}</td>
-                                                        <td>{{ menu.price }}</td>
-                                                        <td>{{ menu.category }}</td>
-                                                        <td>{{ menu.description }}</td>
-                                                        <td>
-                                                            <a class="btn btn-danger" href="{{ path('Remove_Menu',{'id':menu.id}) }}">Supprimer</a>
-                                                        </td>
-                                                        <td>
-                                                            <a class="btn btn-success" href="{{ path('Update_Menu',{'id':menu.id}) }}">Modifier</a>
-                                                        </td>
-                                                    </tr>
+                                    <thead>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Suppression</th>
+                                    <th>Modification</th>
+                                    </thead>
+                                    <tfoot>
+                                    </tfoot>
+                                    <tbody>
+                                    {% for i in cath %}
+                                        <tr>
+                                            <td>{{ i.id }}</td>
+                                            <td>{{ i.name }}</td>
+                                            <td>{{ i.price }}</td>
+                                            <td>{{ i.category }}</td>
+                                            <td>{{ i.description }}</td>
+                                            <td>
+                                                <a class="btn btn-danger" href="{{ path('Remove_Menu',{'id':i.id}) }}">Supprimer</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success" href="{{ path('Update_Menu',{'id':i.id}) }}">Modifier</a>
+                                            </td>
+                                        </tr>
 
-                                                {% endfor %}
+                                    {% endfor %}
 
-                                                </tbody>
-                                            </table>
+                                    </tbody>
+                                </table>
                                 <div class="navigation">
-                                    {{ knp_pagination_render(m) }}
+                                    {{ knp_pagination_render(cath) }}
                                 </div>
-                                        </div>
+
+
+                            </div>
                             <a class="btn btn-success" href="{{path('trie1') }}">Trier par prix</a>
                             <a class="btn btn-success" href="{{path('trie2') }}">Trier par Id</a>
                             <a class="btn btn-success" href="{{path('trie3') }}">Trier par Category</a>
                             <span class="badge badge-sm bg-gradient"> <a href="{{ path('showpdf') }}">PDF</a></span>
 
                         </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
             </main>
         </div>    </div>
 

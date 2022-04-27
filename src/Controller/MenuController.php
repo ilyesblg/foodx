@@ -4,26 +4,46 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Form\MenuType;
+use App\Form\SearchType;
 use App\Repository\MenuRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class MenuController extends AbstractController
 {
     /**
      * @Route("/menu", name="display_menu")
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator): Response
     {
-
         $menus = $this->getDoctrine()->getManager()->getRepository(Menu::class)->findAll();
-        return $this->render('menu/index.html.twig', ['m' => $menus]
+        return $this->render('menu/indexx.html.twig', ['m' => $menus]
 
 
         );
     }
+    /**
+     * @Route("/menulist",name="menulist")
+     */
+    public function list(MenuRepository  $M, Request $request ,PaginatorInterface $paginator )
+    {
+        $list= $paginator->paginate($M->findAll(), $request->query->getInt('page', 1),4) ;
+        $formSearch=$this->createForm(SearchType::class);
+        $formSearch->handleRequest($request);
+        if($formSearch->isSubmitted() ){
+            $name = $formSearch->getData();
+            $TSearch = $paginator->paginate($M->searchCathegorie($name), $request->query->getInt('page', 1),4);
+            return $this->render("menu/indexsearch.html.twig", array('m'=>$list , "cath"=>$TSearch , "formSearch"=>$formSearch->createView()));
+        }
+        return $this->render("menu/index.html.twig", array('m'=>$list, "formSearch"=>$formSearch->createView()));
+    }
+
+
 
     /**
      * @Route("/AddMenu", name="Add_Menu")
@@ -145,7 +165,7 @@ class MenuController extends AbstractController
         ]);
     }
     /**
-     * @Route("/TrierdateASC/back", name="trie1",methods={"GET"})
+     * @Route("/Trierprix", name="trie1",methods={"GET"})
      */
 
     public function triPrix(Request $request, MenuRepository $menuRepository): Response
@@ -154,10 +174,69 @@ class MenuController extends AbstractController
         $menuRepository = $this->getDoctrine()->getRepository(Menu::class);
         $menu= $menuRepository->trierilyes();
 
-        return $this->render('menu/index.html.twig', [
+        return $this->render('menu/indexx.html.twig', [
             'm' => $menu,
         ]);
     }
+    /**
+     * @Route("/Trierid", name="trie2",methods={"GET"})
+     */
 
+    public function triId(Request $request, MenuRepository $menuRepository): Response
+    {
 
+        $menuRepository = $this->getDoctrine()->getRepository(Menu::class);
+        $menu= $menuRepository->trierilyes1();
+
+        return $this->render('menu/indexx.html.twig', [
+            'm' => $menu,
+        ]);
+    }
+    /**
+     * @Route("/Triercategory", name="trie3",methods={"GET"})
+     */
+
+    public function triCategory(Request $request, MenuRepository $menuRepository): Response
+    {
+
+        $menuRepository = $this->getDoctrine()->getRepository(Menu::class);
+        $menu= $menuRepository->trierilyes2();
+
+        return $this->render('menu/indexx.html.twig', [
+            'm' => $menu,
+        ]);
+    }
+    /**
+     * @Route("/showpdf",name="showpdf")
+     */
+    public function showpdf()
+    {
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->setIsRemoteEnabled(true);
+        $pdfOptions->setIsFontSubsettingEnabled(true) ;
+
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $M= $this->getDoctrine()->
+        getRepository(Menu::class)->findAll();
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('menu/pdf.html.twig',
+            ['m'=>$M,]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+
+    }
 }
