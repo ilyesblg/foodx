@@ -79,9 +79,28 @@
             </div>
 
 
-            <a href="{{ path('notfound') }}" class="nav-item nav-link">Forum</a>
             <a href="{{ path('apropos') }}" class="nav-item nav-link">A propos</a>
             <a href="{{ path('contact') }}" class="nav-item nav-link">Contact</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fw-medium mb-0-600 small"> Hello ,{{ app.user.getNomU() }}</span>
+                    <img class="img-profile rounded-circle"
+                         src="{{ asset('FrontOffice/img/Bankiz/avatar.png') }}" height="50" width="50" style="border-radius: 50% ;">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                     aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="{{ path('profile') }}">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profil
+                    </a>
+                   
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('logout') }}" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Déconnexion
+                    </a>
+                </div>
+            </div>
         </div>
   
     </nav>

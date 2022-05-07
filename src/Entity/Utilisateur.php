@@ -82,25 +82,8 @@ class Utilisateur implements UserInterface
      * @Assert\EqualTo(propertyPath="mot_de_passe", message="vous n'aver pas taper le meme mot de passe")
      */
     public $confirme_mot_de_passe;
-    /**
-     * @ORM\OneToMany(targetEntity=Reclamation::class, mappedBy="nom_u")
-     */
-    private $reclamations;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Publication::class, mappedBy="nom_client")
-     */
-    private $publications;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="nom_client")
-     */
-    private $commentaires;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Compte::class, mappedBy="fullname_client")
-     */
-    private $comptes;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -226,125 +209,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Reclamation[]
-     */
-    public function getReclamations(): Collection
-    {
-        return $this->reclamations;
-    }
-
-    public function addReclamation(Reclamation $reclamation): self
-    {
-        if (!$this->reclamations->contains($reclamation)) {
-            $this->reclamations[] = $reclamation;
-            $reclamation->setNomU($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReclamation(Reclamation $reclamation): self
-    {
-        if ($this->reclamations->removeElement($reclamation)) {
-            // set the owning side to null (unless already changed)
-            if ($reclamation->getNomU() === $this) {
-                $reclamation->setNomU(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Publication[]
-     */
-    public function getPublications(): Collection
-    {
-        return $this->publications;
-    }
-
-    public function addPublication(Publication $publication): self
-    {
-        if (!$this->publications->contains($publication)) {
-            $this->publications[] = $publication;
-            $publication->setNomClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removePublication(Publication $publication): self
-    {
-        if ($this->publications->removeElement($publication)) {
-            // set the owning side to null (unless already changed)
-            if ($publication->getNomClient() === $this) {
-                $publication->setNomClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Commentaire[]
-     */
-    public function getCommentaires(): Collection
-    {
-        return $this->commentaires;
-    }
-
-    public function addCommentaire(Commentaire $commentaire): self
-    {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setNomClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentaire(Commentaire $commentaire): self
-    {
-        if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getNomClient() === $this) {
-                $commentaire->setNomClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Compte[]
-     */
-    public function getComptes(): Collection
-    {
-        return $this->comptes;
-    }
-
-    public function addCompte(Compte $compte): self
-    {
-        if (!$this->comptes->contains($compte)) {
-            $this->comptes[] = $compte;
-            $compte->setFullnameClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompte(Compte $compte): self
-    {
-        if ($this->comptes->removeElement($compte)) {
-            // set the owning side to null (unless already changed)
-            if ($compte->getFullnameClient() === $this) {
-                $compte->setFullnameClient(null);
-            }
-        }
-
-        return $this;
-    }
     public function __toString() {
         return $this->nom_u;
     }

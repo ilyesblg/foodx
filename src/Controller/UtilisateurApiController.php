@@ -150,4 +150,6 @@ class UtilisateurApiController extends AbstractController
 
         return new JsonResponse($formatted);
     }
+    
+
 }

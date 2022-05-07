@@ -82,7 +82,12 @@
                                             {% endif %}
                                         {% endfor %}
                                     </td>
-                                    
+                                     <td>
+                                        <form action="{{ path('supprimer',{'id':k.getId()})}}">
+                                            <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                                                    style="height: 35px; padding: 6px 15px; "> Delete</button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <form action="{{ path('modifier',{'id':k.getId()})}}">
                                             <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"

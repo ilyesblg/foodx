@@ -58,6 +58,23 @@ class AdminController extends AbstractController
         //OU : Affichage d'un message de confirmation
         //return new Response("Suppression faite avec succès");
     }
+    /**
+     * @Route("/admin/supprimer/{id}", name="supprimer")
+     */
+    public function supprimer($id): Response
+    {
+        //Récupérer le classroom à supprimer
+        $Utilisateur = $this->getDoctrine()->getRepository(Utilisateur::class) ->find($id);
+        //L'action de suppression :
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($Utilisateur);
+        $em->flush(); // On ne prend en considération la suppression qu'apres l'appel de flush
+        //faire une redirections vers l'affichage
+        $this->addFlash('message','Utilisateur bien supprimer');
+        return $this->redirectToRoute('back_utilisateur');
+        //OU : Affichage d'un message de confirmation
+        //return new Response("Suppression faite avec succès");
+    }
 
     /**
      * @Route("/admin/addU_back", name="addU_back")
@@ -186,5 +203,17 @@ class AdminController extends AbstractController
         $Utilisateur= $this->getDoctrine()->getRepository(Utilisateur::class)->TriParNom();
         return $this->render("admin/back_utilisateur.html.twig",array('formU'=>$Utilisateur));
     }
+
+    /*public function searchAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $requestString= $request->get('q');
+        $posts=$em->getRepository('AppBundle:Utilisateur')->findEntitiesByString($requestString);
+        if(!$Utilisateur){
+            $result[]
+        }
+    }*/
+
+
 
 }

@@ -15,18 +15,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-
+use Twilio\Rest\Client;
 
 class UtilisateurController extends AbstractController
 {
     /**
      * @Route("/inscription", name="inscription")
      */
-    public function inscription(Request $request , UserPasswordEncoderInterface $encoder ,\Swift_Mailer $mailer) : Response{
+    public function inscription(Request $request , UserPasswordEncoderInterface $encoder ,\Swift_Mailer $mailer, EntityManagerInterface $entityManager) : Response{
         $Utilisateur = new Utilisateur();
         $form=$this->createForm(UtilisateurType::class,$Utilisateur);
         $form->handleRequest($request);
@@ -58,6 +59,24 @@ class UtilisateurController extends AbstractController
             $mailer->send($message);
             $this->addFlash('message','Un email de verification de compte a ete envoyee');
 
+            /*------------------------------Twilio------------------------------------
+            $entityManager->persist($Utilisateur);
+            $entityManager->flush();
+           
+ 
+            $sid    = "AC73de591a7c715cbbab9070219267708c"; 
+            $token  = "33f81b63854a098375104ea7f474d716"; 
+            $twilio = new Client($sid, $token); 
+            $message1 = $twilio->messages 
+                      ->create("+21652778549", // to 
+                               array(  
+                                   "messagingServiceSid" => "MGcb5e3ea853dc424b7debba96125d5275",      
+                                   "body" => "hello" 
+                               ) 
+                      ); 
+                print($message1->sid);
+           
+            ------------------------------------------------------------------*/
 
             return $this->redirectToRoute('login');
             }
