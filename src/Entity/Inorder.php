@@ -14,22 +14,26 @@ class Inorder
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("Inorder")
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("Inorder")
      */
     private $menu_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Order",inversedBy="inorder")
+     * @Groups("Inorder")
      */
 
     private $order;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("Inorder")
      */
     private $quantity;
 

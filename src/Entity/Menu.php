@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MenuRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MenuRepository::class)
@@ -15,6 +16,8 @@ class Menu
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("Menu")
+     * @Groups("Inorder")
      */
     private $id;
 
@@ -26,6 +29,7 @@ class Menu
      *
      *     )
      * @ORM\Column(type="string", length=255)
+     * @Groups("Menu")
      */
     private $name;
 
@@ -38,6 +42,7 @@ class Menu
      *      maxMessage = "Maximum Price is 500"
      * )
      * @ORM\Column(type="integer")
+     * @Groups("Menu")
      */
     private $price;
 
@@ -49,6 +54,7 @@ class Menu
      *
      *     )
      * @ORM\Column(type="string", length=255)
+     * @Groups("Menu")
      */
     private $category;
 
@@ -60,6 +66,7 @@ class Menu
  *      minMessage = "The minimum length is 7 ",
  *      maxMessage = "The maximum length is 100" )
  * @ORM\Column(type="string", length=255)
+   * @Groups("Menu")
  */
     private $description;
 
