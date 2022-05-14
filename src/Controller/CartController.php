@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Controller;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Cart\CartService;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController
 {

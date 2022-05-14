@@ -58,16 +58,16 @@ class Menu
      */
     private $category;
 
-  /**
- * @Assert\NotBlank(message="field can't be empty")
- * @Assert\Length(
- *      min = 7,
- *      max = 100,
- *      minMessage = "The minimum length is 7 ",
- *      maxMessage = "The maximum length is 100" )
- * @ORM\Column(type="string", length=255)
-   * @Groups("Menu")
- */
+    /**
+     * @Assert\NotBlank(message="field can't be empty")
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 100,
+     *      minMessage = "The minimum length is 7 ",
+     *      maxMessage = "The maximum length is 100" )
+     * @ORM\Column(type="string", length=255)
+     * @Groups("Menu")
+     */
     private $description;
 
     public function getId(): ?int

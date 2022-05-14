@@ -1,6 +1,5 @@
 <?php
 namespace  App\Service\Cart ;
-
 use App\Repository\MenuRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -54,7 +53,7 @@ class CartService
     {
         $total = 0;
         foreach ($this->getFullCart() as $item) {
-            $total += $item['menu']->getPrice() * $item['quantity'];
+            $total += $item['menu']->getPrice()  * $item['quantity'];
         }
         return $total;
 

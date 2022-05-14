@@ -21,9 +21,9 @@ class MenuController extends AbstractController
      */
     public function index(PaginatorInterface $paginator): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE','ROLE_ADMIN');
         $menus = $this->getDoctrine()->getManager()->getRepository(Menu::class)->findAll();
         return $this->render('menu/indexx.html.twig', ['m' => $menus]
-
 
         );
     }

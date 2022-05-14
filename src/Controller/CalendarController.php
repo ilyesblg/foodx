@@ -44,7 +44,6 @@ class CalendarController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="app_calendar_show", methods={"GET"})
      */
